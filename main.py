@@ -99,8 +99,17 @@ class DouyinVideoSpider:
         self.page.context.storage_state(path=storage_path)
         print("视频链接如下：")
         print(video_url)
+        filename = remove_illegal_chars(filename)
         self.download(video_url, filename)
         print("=" * 50)
+
+
+def remove_illegal_chars(filename: str):
+    # 定义一个包含所有非法字符的字符串
+    illegal_chars = r'[<>:"/\\|?*]'
+    # 使用 replace() 方法将所有非法字符替换为空字符串
+    filename = re.sub(illegal_chars, " ", filename)
+    return filename
 
 
 def create_spider(pw: sync_playwright, headless: bool = True, channel: str = "chrome"):
